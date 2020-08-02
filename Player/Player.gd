@@ -27,9 +27,14 @@ onready var blinkAnimationPlayer = $BlinkAnimationPlayer
 
 func _ready():
 	randomize()
-	stats.connect("no_health", self, "queue_free")
+	stats.connect("no_health", self, "game_over")
 	animationTree.active = true
 	swordHitbox.knockback_vector = roll_vector
+	
+func game_over():
+	stats.health = 4
+	queue_free()
+	get_tree().change_scene("res://UI/GameOver.tscn")
 
 func _physics_process(delta):
 	match state:
